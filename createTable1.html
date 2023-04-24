@@ -1,0 +1,171 @@
+<script>
+let startRow = 0
+let endRow = 10
+let dataSet
+
+window.addEventListener("DOMContentLoaded", (event) => {
+  console.log("DOM fully loaded and parsed");
+  Start()
+});
+
+
+function Start(){
+    pageChange("secCreate")    
+
+    google.script.run.withSuccessHandler((data)=>{
+      dataSet = data.slice(1)
+      createTable(dataSet,startRow,endRow)
+      
+      showTable(data.slice(1))
+
+
+    }).getData()
+}
+
+
+function createTable(dataSet,startRow,endRow){
+  const tbody = document.querySelector("tbody")
+  tbody.innerHTML = "" 
+    
+    // วนสร้างแถว
+    let xxx = dataSet.slice(startRow, endRow);
+
+        for (let row of xxx) {
+          const rows = tbody.insertRow();
+              // วนสร้างคอมลัมน์ และใส่ค่าที่ละคอมลัมน์ตาม aray
+              for (let cell of row) {
+                  // console.log(cell)
+                let newCell = tbody.rows[tbody.rows.length - 1].insertCell();
+                      newCell.textContent = cell;
+              }
+            console.log(rows)
+            // let img = document.createElement('img');
+            // img.src = "https://lh5.googleusercontent.com/d/10w0xj5NQrbVUdCJ9w8iU_gT3AOWmIJ8s"
+            // img.width = "60";
+            // rows.appendChild(img)
+
+            // console.log(rows.querySelectorAll("td")[11].classList.add("d-none"))
+
+
+            let button = document.createElement("button");
+            button.innerText = "show";
+            button.setAttribute( "class", "btn btn-info" );
+
+            button.setAttribute( "onClick", "getEdit(this)" );
+            rows.appendChild(button)
+        }
+
+            if(endRow >= dataSet.length){
+              btnNEXT.setAttribute('disabled', '');
+            }
+            if(startRow > 0){
+              btnPrevies.removeAttribute('disabled');
+            }
+
+            if(startRow <= 0){
+              btnPrevies.setAttribute('disabled', '');
+            }
+            if(endRow < dataSet.length){
+              btnNEXT.removeAttribute('disabled');
+            }
+            
+}
+
+const btnNEXT = document.getElementById("btnNEXT")
+const btnPrevies = document.getElementById("btnPrevies")
+
+btnNEXT.addEventListener('click',(e)=>{
+  startRow = startRow+10
+  endRow = endRow+10
+  const tbody = document.querySelector("tbody")
+  
+  // tbody reset
+  tbody.innerHTML = "" 
+
+  createTable(dataSet,startRow,endRow)
+  // console.log(endRow)
+  // console.log(dataSet.length)
+
+  // if(endRow>=dataSet.length){
+  //   btnNEXT.setAttribute('disabled', '');
+  // }
+  // if(startRow>0){
+  //   btnPrevies.removeAttribute('disabled');
+  // }
+
+})
+
+btnPrevies.addEventListener('click',()=>{
+  startRow = startRow-10
+  endRow = endRow-10
+  const tbody = document.querySelector("tbody")
+  
+  // tbody reset
+  tbody.innerHTML = "" 
+
+  createTable(dataSet,startRow,endRow)
+  // console.log(startRow)
+  // console.log(dataSet.length)
+
+  // if(startRow <= 0){
+  //   btnPrevies.setAttribute('disabled', '');
+  // }
+
+  // if(endRow<dataSet.length){
+  //   btnNEXT.removeAttribute('disabled');
+  // }
+})
+
+
+const getEdit = (e)=>{
+  btnModal.click()
+
+  console.log(e.parentNode.parentNode)
+  let dataTr = e.parentNode;
+  let dataCol0 = dataTr.querySelectorAll("td")[0].innerText;
+  let dataCol1 = dataTr.querySelectorAll("td")[1].innerText;
+  let dataCol2 = dataTr.querySelectorAll("td")[2].innerText;
+  let dataCol3 = dataTr.querySelectorAll("td")[3].innerText;
+  let dataCol4 = dataTr.querySelectorAll("td")[4].innerText;
+  let dataCol5 = dataTr.querySelectorAll("td")[5].innerText;
+  let dataCol6 = dataTr.querySelectorAll("td")[6].innerText;
+  let dataCol7 = dataTr.querySelectorAll("td")[7].innerText;
+  let dataCol8 = dataTr.querySelectorAll("td")[8].innerText;
+  let dataCol9 = dataTr.querySelectorAll("td")[9].innerText;
+  let dataCol10 = dataTr.querySelectorAll("td")[10].innerText;
+  let dataCol11 = dataTr.querySelectorAll("td")[11].innerText;
+
+
+ const htmlText = `
+ <div class="list-group">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">${dataCol0}</h5>
+      <small>${dataCol1}</small>
+    </div>
+    <div class="d-flex w-100 justify-content-between">
+        <p class="mb-1">ตำแหน่ง : ${dataCol3}</p>
+        <p class="mb-1">${dataCol2}</p>
+    </div>        
+        <p class="mb-1">Office :  ${dataCol4}</p>
+        <p class="mb-1">IdRef : ${dataCol5}</p>
+        <p class="mb-1">วันเกิด ${dataCol6}</p>
+        <p class="mb-1">เงินเดือน ${dataCol7}</p>
+        <p class="mb-1">งานอดิเรก ${dataCol8}</p>
+        <p class="mb-1">${dataCol9}</p>
+        <p class="mb-1">${dataCol10}</p>
+    <div class="d-flex w-100 justify-content-center">
+    <img src="${dataCol11}" alt="Girl in a jacket" width="80" ">
+    </div>
+  </a>
+</div>
+  ` 
+ document.querySelector(".contentShow").innerHTML = htmlText
+
+  console.log(dataCol0,dataCol1,dataCol2,dataCol3,dataCol4,dataCol5,dataCol6,dataCol7,dataCol8,dataCol9);
+}
+
+function modalPrint(){
+  window.print()
+}
+
+</script>
