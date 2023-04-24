@@ -20,6 +20,10 @@ Topic knowledge
 1. Crud
 2. Validation and resetForm
 3. Gen id For Row of Form
+4. indexOf array For Search Data of index Row
+5. Jquery Datatable Responsive and Combine columns
+6. Modal Datatable
+7. insert Button on Row Datatable
 
 Thank You.............Enjoy
 
