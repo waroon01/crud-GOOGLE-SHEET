@@ -1,0 +1,165 @@
+<script>
+
+    // function savedata(){
+    //     const nameEmp = document.getElementById("nameEmp")
+    //     const positionEmp = document.getElementById("positionEmp")
+    //     const officeEmp = document.getElementById("officeEmp")
+    //     const idEmp = document.getElementById("idEmp")
+    //     const bdEmp = document.getElementById("bdEmp")
+    //     const salEmp = document.getElementById("salEmp")
+
+    //     const chekInput = document.getElementById("gridCheck").value
+
+    //     let obj = {}
+
+    //     //get checkbok value
+    //     var gridCheck = document.getElementsByName('gridCheck');
+    //     var gridCheck_value;
+    //     var arrGridcheck = []
+    //     for(var i = 0; i < gridCheck.length; i++){
+    //         if(gridCheck[i].checked){
+    //             gridCheck_value = gridCheck[i].value;
+    //             console.log(gridCheck_value)
+    //             arrGridcheck.push(gridCheck_value)
+
+    //         }
+    //     }
+
+    //     obj.nameEmp = nameEmp.value
+    //     obj.positionEmp = positionEmp.value
+    //     obj.officeEmp = officeEmp.value
+    //     obj.idEmp = idEmp.value
+    //     obj.gridCheck = arrGridcheck
+    //     obj.salEmp = salEmp.value
+
+        
+    //       console.log(nameEmp.value)
+    //       console.log(positionEmp.value)
+    //       console.log(officeEmp.value)
+    //       console.log(idEmp.value)
+    //       console.log(salEmp.value)
+    //       console.log(obj.gridCheck)
+
+    //       console.log(obj)
+
+    //   google.script.run.withSuccessHandler((res)=>{
+    //     console.log(res)
+    //   }).mainData(obj)
+
+
+
+    // }
+
+
+    function submitForm(dataForm){
+      event.preventDefault()
+
+      const formEmp = document.getElementById("myFormA")
+
+      if (!formEmp.checkValidity()) {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'ตรวจสอบการกรอกข้อมูลให้ถูกต้องก่อนบันทึก',
+            showConfirmButton: false,
+            timer: 1500
+          })
+
+        return console.log("a")
+      }
+
+
+      // console.log(dataForm)
+      google.script.run.withSuccessHandler((res)=>{
+        Start()
+        console.log(res)
+        formEmp.reset()
+        formEmp.classList.remove('was-validated');
+
+
+
+      }).mainData_B(dataForm)
+
+    }
+
+
+    function submitFormEdit(dataForm){
+      event.preventDefault()
+
+      const formEmpEdit = document.getElementById("myFormB")
+
+      if (!formEmpEdit.checkValidity()) {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'ตรวจสอบการกรอกข้อมูลให้ถูกต้องก่อนบันทึก',
+            showConfirmButton: false,
+            timer: 1500
+          })
+
+        return console.log("a")
+      }
+
+
+      // console.log(dataForm)
+      google.script.run.withSuccessHandler((res)=>{
+        Start()
+        console.log(res)
+       
+          $('#exampleModal2').modal('hide')
+
+
+      }).mainData_B(dataForm)
+
+    }
+
+
+var files1 ={}
+    document.getElementById("file1").onchange = function () {
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    document.getElementById("image1").src = e.target.result;
+    // $("#image1").show();
+    files1.dataURL = e.target.result
+    files1.name = document.getElementById("file1").files[0].name
+console.log(files1)
+    document.getElementById("image1").setAttribute("width", 100); // เพิ่มให้แสดงภาพ
+  };
+  reader.readAsDataURL(this.files[0]);
+};
+
+
+(() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+
+
+const pageChange = (page1) => {
+      console.log("node id = "+page1)
+        var idElement = [...document.querySelectorAll('section')].forEach(elm => {
+          // console.log(elm.id)
+            if(elm.id===page1 ){
+              document.getElementById(elm.id).style.display = "block"
+              }else{
+                document.getElementById(elm.id).style.display = "none"
+            }
+        });
+      }
+
+
+</script>
