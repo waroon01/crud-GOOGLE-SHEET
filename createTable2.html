@@ -1,0 +1,132 @@
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<!-- responsive DataTable Script -->
+<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+
+
+<script>
+
+  let table				
+  function showTable(DataArrays){
+    console.log(DataArrays)
+    $(document).ready(function () {
+        table =  $('#example').DataTable({
+          
+            data: DataArrays.slice(1),
+            columns: [
+                { title: 'Date' },                
+                { title: 'ID' },
+                { title: 'ชื่อ สกุล',
+                  render: function (data, type, row) {
+                  return `<div class="row">
+                  <span class="fs-6 fw-bold text-success">${data}</span>
+                  </div>
+                  <div class="row">
+                  <span class="text-info fs-6">${row[1]}</span>
+                  </div>
+                  <div class="row">
+                  <span class="text-danger fw-bold">${row[3]}</span>
+                  </div>
+                  `
+                }                     
+                },
+                { title: 'Position' },
+                { title: 'Office' },
+                { title: 'ID Ref' },
+                { title: 'Birth' },
+                { title: 'Salary.' },
+                { title: 'งานอดิเรก',
+                  render: function (data, type, row) {
+                  return `<div class="row">
+                  <span class="fs-6 fw-bold text-success">${data}</span>
+                  </div>
+                  <div class="row">
+                  <span class="text-info fs-6">${row[9]}</span>
+                  </div>
+                  `
+                  }                     
+                },
+                { title: 'กีฬา' },
+                { title: 'การยอมรับ' },
+                { title: 'รูปภาพ',
+                  render: function (data, type, row) {
+                  return `<img src="${data}" alt="Girl in a jacket" width="40" height="40">`
+                  }                   
+                },
+                { title: 'Act' },
+             
+            ],
+                
+
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/th.json',
+                },
+
+                responsive: {
+                    details: {
+                        display: $.fn.dataTable.Responsive.display.modal( {
+                            header: function ( row ) {
+                                var data = row.data();
+                                return 'Details for '+data[0]+' '+data[1];
+                            }
+                        } ),
+                        renderer: $.fn.dataTable.Responsive.renderer.tableAll()
+                    }
+                },
+
+      //ซ่อนคอลัมภ์ที่ต้องการ
+      columnDefs: [
+        {
+          targets: [0,1,3,9],
+          visible: false,
+          searchable: true,
+        },
+        {
+            targets: -1,
+            data: null,
+            defaultContent: '<button class="edit btn btn-success btn-sm">Click!</button>',
+        },        
+      ],
+
+       destroy: true,
+
+        });
+
+
+
+
+      $('#example tbody').on('click', 'button.edit', function () {
+
+              const dataT = table.row($(this).parents('tr')).data();
+              console.log(dataT)
+              btnModal2.click()
+              $('#refID_edit').val(dataT[1])
+              $('#nameEmp_edit').val(dataT[2])
+              $('#positionEmp_edit').val(dataT[3])
+              $('#officeEmp_edit').val(dataT[4])
+              $('#idEmp_edit').val(dataT[5])
+              $('#bdEmp_edit').val(dataT[6])
+              $('#salEmp_edit').val(dataT[7])
+            
+            if(dataT[8] == "วาดรูป"){
+            $('#gridChecka_edit').attr('checked', true)
+            }else{$('#gridChecka_edit').attr('checked', false)}
+
+            if(dataT[9] == "กีฬา"){
+            $('#gridCheckb_edit').attr('checked', true)
+            }else{$('#gridCheckb_edit').attr('checked', false)}            
+            
+            
+            $('[name="flexRadioDefault"]').removeAttr('checked');
+            $("input[name=flexRadioDefault][value=" + dataT[10] + "]").attr('checked', 'checked');
+
+              $('#oldfile').val(dataT[11])
+
+
+      });
+
+
+    });
+  }
+</script>
