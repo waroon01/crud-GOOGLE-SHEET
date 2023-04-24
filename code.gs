@@ -21,15 +21,20 @@ function include(file){
 
 
 function mainData_B(dataForm){
+  try {
     if(!dataForm.refID_edit){
       let codeEmp = new Date().getTime();
       createData(dataForm,codeEmp)
     }else{
       updateData(dataForm)
     }
-
-
-  return "success"
+  }
+  catch(err) {
+    console.log(err.message) 
+  }
+  finally {
+    return "success"
+  }
 }
 
 function createData(dataForm,codeEmp){
